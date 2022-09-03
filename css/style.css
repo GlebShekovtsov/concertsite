@@ -1,0 +1,100 @@
+img {
+    max-width: 100%;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+}
+
+body {
+    font-family: sans-serif;
+}
+
+a {
+    color: #000;
+    text-decoration: none;
+}
+
+.btn {
+    background-color: transparent;
+    border: 0;
+    padding: 5px 5px;
+}
+
+.container {
+    max-width: 1024px;
+    margin: 0 auto;
+}
+
+.header__menu {
+    padding: 10px 0;
+    display: flex;
+    gap: 35px;
+    flex-direction: row;
+}
+
+.header__container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.container__header {
+    margin: 0;
+    margin-bottom: 15px;
+}
+
+.main__container {
+    padding: 10px 0;
+}
+
+.content__form {
+    margin-bottom: 50px;
+}
+
+.form__label {
+    margin-right: 15px;
+}
+
+.form__input {
+    margin-right: 15px;
+}
+
+.form__submit {
+    background-color: #000;
+    color: #fff;
+    border-radius: 5px;
+}
+.concert__item {
+    width: calc((100%-30px) / 3);
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #000;
+}
+.concert__item img {
+    border-bottom: 1px solid #000;
+}
+.concert__content__wrapper {
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    padding: 10px;
+}
+.concert__header {
+    margin: 0;
+    margin-bottom: 5px;
+}
+.concert__descr {
+    margin: 0;
+}
+.concert__link {
+    margin-bottom: 10px;
+}
+.concert__time {
+    font-size: 14px;
+    margin-bottom: 5px;
+}
+.concert__span {
+    margin-bottom: 5px;
+}
