@@ -58,42 +58,24 @@ if (!$conn) {
                     </form>
                     <div class="concert__wrapper">
                         <ul class="concert__list">
-
-                            <li class="concert__item">
                                 <?php
                                 foreach ($concertSelectResult as $concertRow) {
-                                    echo "<img src='img/".$concertRow['img']."' alt=''>";
+                                    echo "<li class='concert__item'>";
+                                    echo "<img src='img/" . $concertRow['img'] . "' alt=''>";
                                     echo "<div class='concert__content__wrapper'>";
                                     echo
                                     "<h2 class='concert__header'>" .
                                         "<a href='index.php?name=' class='concert__link'>" . $concertRow['name'] . "</a>" .
-                                    "</h2>";
+                                        "</h2>";
                                     echo "<time class='concert__time'>" . "Дата: " . "$concertRow[date]" . "</time>";
                                     echo "<span class='concert__span'>" . "Группа: " . "$concertRow[group_name]" . "</span>";
                                     echo "<span class='concert__span'>" . "Жанр: " . "$concertRow[genre]" . "</span>";
                                     echo "<p class='concert__descr'>" . "$concertRow[description]" . "</p>";
                                     echo "</div>";
+                                    echo "</li>";
                                 }
                                 ?>
-                            </li>
-
-                            <!-- <li class="concert__item">
-                                <img src="img/zal1.jpg" alt="">
-                                <div class="concert__content__wrapper">
-                                    <h2 class="concert__header">
-                                        <a href="index.php?name=" class="concert__link">Концерт Джорджа Floyd'а</a>
-                                    </h2>
-                                    <time class="concert__time">Дата: 2022-09-03</time>
-                                    <span class="concert__span">Группа: Pink Floyd</span>
-                                    <span class="concert__span">Жанр: Рок</span>
-                                    <p class="concert__descr">
-                                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                                        Accusantium porro dignissimos aperiam, corrupti in ex quia modi nobis,
-                                        esse aliquam inventore at delectus assumenda molestiae consequuntur,
-                                        eum maiores animi sunt.
-                                    </p>
-                                </div>
-                            </li> -->
+                            
                         </ul>
                     </div>
 
