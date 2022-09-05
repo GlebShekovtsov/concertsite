@@ -1,3 +1,9 @@
+html {
+    box-sizing: border-box;
+}
+*, *::after, *::before {
+    box-sizing: inherit;
+}
 img {
     max-width: 100%;
 }
@@ -5,9 +11,11 @@ img {
 ul {
     list-style: none;
     padding: 0;
+    margin: 0;
 }
 
 body {
+    min-width: 320px;
     font-family: sans-serif;
 }
 
@@ -17,14 +25,16 @@ a {
 }
 
 .btn {
+    cursor: pointer;
     background-color: transparent;
     border: 0;
     padding: 5px 5px;
 }
 
 .container {
-    max-width: 1024px;
+    padding: 0 15px;
     margin: 0 auto;
+    max-width: 1024px;
 }
 
 .header__menu {
@@ -35,6 +45,8 @@ a {
 }
 
 .header__container {
+    padding-top: 20px;
+    padding-bottom: 20px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -42,15 +54,18 @@ a {
 
 .container__header {
     margin: 0;
-    margin-bottom: 15px;
+    margin-bottom: 50px;
 }
 
-.main__container {
-    padding: 10px 0;
+.concert__container {
+    padding-top: 10px;
 }
 
 .content__form {
-    margin-bottom: 50px;
+    padding: 15px 15px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    background-color: #EEEEEE;
 }
 
 .form__label {
@@ -58,20 +73,24 @@ a {
 }
 
 .form__input {
+    min-width: 220px;
     margin-right: 15px;
 }
 
 .form__submit {
+    margin-right: 5px;
     background-color: #000;
     color: #fff;
     border-radius: 5px;
 }
 .concert__item {
-    width: calc((100%-30px) / 3);
+    width: calc((100% - 30px * 2) / 3);
     margin-bottom: 30px;
     display: flex;
     flex-direction: column;
     border: 1px solid #000;
+    border-bottom-right-radius: 8px;
+    border-bottom-left-radius: 8px;
 }
 .concert__item:not(:last-child) {
     margin-right: 30px;
@@ -79,11 +98,36 @@ a {
 .concert__item img {
     display: flex;
     flex: 1;
+    min-height: 320px;
+    max-height: 320px;
     object-fit: cover;
+    overflow: hidden;
     border-bottom: 1px solid #000;
+}
+.concert__image {
+    max-height: 300px;
+}
+.concert-about__wrapper {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 20px;
+}
+.concert-about__header {
+    margin: 0;
+    margin-bottom: 15px;
+}
+.concert-about__container {
+    padding-top: 50px;
+}
+.concert-about__content__wrapper {
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    padding: 0 15px;
 }
 .concert__content__wrapper {
     display: flex;
+    flex: 1;
     flex-direction: column;
     align-content: center;
     padding: 10px;
@@ -94,6 +138,7 @@ a {
 }
 .concert__descr {
     margin: 0;
+    margin-bottom: 10px;
 }
 .concert__link {
     margin-bottom: 10px;
@@ -103,10 +148,46 @@ a {
     margin-bottom: 5px;
 }
 .concert__span {
+    font-size: 16px;
+    line-height: 20px;
     margin-bottom: 5px;
+}
+.concert__about {
+    padding: 10px;
+    color: #fff;
+    background-color: #000;
+    border-radius: 6px;
 }
 .concert__list {
     display: flex;
     flex-direction: row;
-    /* flex-wrap: wrap; */
+}
+.concert__about__wrapper {
+    display: flex;
+    flex: 1;
+    justify-content: center;
+    align-items: flex-end;
+}
+.sit__link {
+    color: darkblue;
+}
+
+.sit__list {
+    display: flex;
+    flex-direction: column;
+}
+.sit__item {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+.sit__header {
+    margin: 0;
+}
+.sit__paragraph {
+    margin: 0;
+}
+.sit__item {
+    margin-bottom: 10px;
 }
