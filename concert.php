@@ -49,7 +49,7 @@
                         ?>
                         <script>
                             setTimeout(() => {
-                                document.location.replace("http://concert/concertsite/index.php");
+                                document.location.replace("http://concert/concertsite/profile.php");
                             }, 2000);
                         </script>
                         <?php

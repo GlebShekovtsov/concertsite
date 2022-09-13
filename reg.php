@@ -18,6 +18,9 @@ include 'connect.php';
             <div class="container reg__container">
                 <div class="login__wrapper">
                     <h2 class="reg__header">Регистрация</h2>
+                    <p class="reg__account">
+                        Есть аккаунт? <a href="auth.php" class="reg__link">Войдите</a>
+                    </p>
                     <form action="" class="reg__form form" method="POST">
                         <label for="first-name">Имя:</label>
                         <input class="reg__input" type="text" name="first-name" id="first-name">

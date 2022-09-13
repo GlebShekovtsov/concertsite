@@ -11,6 +11,9 @@
                 <li class="header__item">
                     <a href="#" class="header__link">Контакты</a>
                 </li>
+                <li class="header__item">
+                    <a href="profile.php" class="header__link">Личный кабинет</a>
+                </li>
             </ul>
         </nav>
         <ul class="cabinet header__cabinet">

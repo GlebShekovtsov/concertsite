@@ -2,7 +2,7 @@
 include 'connect.php';
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 
 <head>
     <meta charset="UTF-8">
@@ -17,7 +17,10 @@ include 'connect.php';
         <section class="section__reg reg">
             <div class="container reg__container">
                 <div class="login__wrapper">
-                    <h2 class="login__header">Регистрация</h2>
+                    <h2 class="login__header">Авторизация</h2>
+                    <p class="login__account">
+                        Нет аккаунта? <a href="reg.php" class="login__link">Зарегистрируйтесь</a>
+                    </p>
                     <form action="" class="login__form form" method="POST">
                         <label for="login">Логин:</label>
                         <input class="login__input" type="text" name="login" id="login" required>
@@ -38,8 +41,10 @@ include 'connect.php';
                             if (password_verify($_POST['password'], $hash)) {
                                 $userid = $authAssoc['id'];
                                 $userlogin = $authAssoc['login'];
+                                $userFirstName = $authAssoc['first-name'];
                                 $_SESSION["login"] = $userlogin;
                                 $_SESSION["userid"] = $userid;
+                                $_SESSION["first-name"] = $userFirstName;
                                 echo "<p>Вход успешно выполнен, перенаправляем на главную...</p>";
                     ?>
                                 <script>
