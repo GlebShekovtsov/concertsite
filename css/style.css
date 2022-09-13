@@ -36,7 +36,9 @@ a {
     margin: 0 auto;
     max-width: 1024px;
 }
-
+.header {
+    border-bottom: 1px solid #000;
+}
 .header__menu {
     padding: 10px 0;
     display: flex;
@@ -51,14 +53,18 @@ a {
     justify-content: space-between;
     align-items: center;
 }
-
+.header__cabinet {
+    display: flex;
+    flex-direction: row;
+    gap: 30px;
+}
 .container__header {
     margin: 0;
     margin-bottom: 50px;
 }
 
 .concert__container {
-    padding-top: 10px;
+    padding-top: 30px;
 }
 
 .content__form {
@@ -190,4 +196,62 @@ a {
 }
 .sit__item {
     margin-bottom: 10px;
+}
+.reg__container {
+    padding-top: 50px;
+    margin: auto auto;
+    display: flex;
+    width: 100%;
+    height: 100vh;
+    justify-content: center;
+}
+.form {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    width: 100%;
+    height: 100%;
+}
+.reg__wrapper {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 50%;
+    max-height: 50vh;
+    border-radius: 16px;
+    box-shadow: 1px 1px 20px 1px rgba(34, 60, 80, 0.2);
+}
+.login__wrapper {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 50%;
+    max-height: 50vh;
+    border-radius: 16px;
+    box-shadow: 1px 1px 20px 1px rgba(34, 60, 80, 0.2);
+}
+.reg__header {
+    margin: 0;
+}
+.login__header {
+    margin: 0;
+} 
+.reg__submit {
+    display: flex;
+    align-self: center;
+    max-width: 300px;
+    font-size: 18px;
+    border: 1px solid #000;
+    border-radius: 8px;
+}
+.reg__input {
+    padding: 5px;
+}
+.login__input {
+    padding: 10px;
+}
+.exit__link {
+    color: rgb(9, 23, 37);
 }

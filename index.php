@@ -9,9 +9,11 @@ if (!$conn) {
     $concertSelectRow = mysqli_fetch_array($concertSelectResult, MYSQLI_ASSOC);
     echo "</div>";
 }
+
 ?>
 <!DOCTYPE html>
 <html lang="ru">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -22,27 +24,7 @@ if (!$conn) {
 </head>
 
 <body>
-    <header class="header">
-        <div class="container header__container">
-            <nav class="header__nav">
-                <ul class="header__menu">
-                    <li class="header__item">
-                        <a href="index.php" class="header__link">Главная</a>
-                    </li>
-                    <li class="header__item">
-                        <a href="#" class="header__link">О нас</a>
-                    </li>
-                    <li class="header__item">
-                        <a href="#" class="header__link">Контакты</a>
-                    </li>
-                </ul>
-            </nav>
-            <ul class="cabinet header__cabinet">
-                <li class="cabinet__item"><a href="#" class="cabinet__link">Войти</a></li>
-                <li class="cabinet__item"></li>
-            </ul>
-        </div>
-    </header>
+    <?php include 'header.php' ?>
     <main class="main">
         <section class="section concert сoncert__section">
             <div class="container concert__container">
