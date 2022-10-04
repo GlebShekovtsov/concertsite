@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Сен 13 2022 г., 03:15
+-- Время создания: Окт 04 2022 г., 14:00
 -- Версия сервера: 8.0.29
 -- Версия PHP: 8.1.5
 
@@ -67,8 +67,8 @@ CREATE TABLE `concert_zal` (
 --
 
 INSERT INTO `concert_zal` (`id`, `id_concert`, `sit_num`, `sit_status`, `sit_price`, `sit_direction`, `reserved_by_id`) VALUES
-(1, 1, '1', 'занятое', '2000', 'переднее', '123'),
-(2, 1, '2', 'свободное', '2000', 'переднее', '');
+(1, 1, '1', 'занятое', '2000', 'переднее', 'jmixo'),
+(2, 1, '2', 'занятое', '2000', 'переднее', 'jmixo');
 
 -- --------------------------------------------------------
 
@@ -91,6 +91,20 @@ CREATE TABLE `user` (
 INSERT INTO `user` (`id`, `first-name`, `surname`, `login`, `password`) VALUES
 (3, 'Валерий', 'Жмышко', 'jmixo', '$2y$10$TgrN4plXMy7uDDJTMdQAOOTKx6Hug0gsn.9t98Fxr6VGljkoeb9Mu'),
 (5, '123', '123', '123', '$2y$10$XLBXSABsms4vPy6a9CmM9ObC6g19YpamgxQUbfAXBsJ/BlQS.Hrma');
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `user_history`
+--
+
+CREATE TABLE `user_history` (
+  `id` int NOT NULL,
+  `action` varchar(255) NOT NULL,
+  `date` varchar(255) NOT NULL,
+  `concert_id` varchar(255) NOT NULL,
+  `sit_id` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Индексы сохранённых таблиц
@@ -115,6 +129,12 @@ ALTER TABLE `user`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Индексы таблицы `user_history`
+--
+ALTER TABLE `user_history`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- AUTO_INCREMENT для сохранённых таблиц
 --
 
@@ -135,6 +155,12 @@ ALTER TABLE `concert_zal`
 --
 ALTER TABLE `user`
   MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT для таблицы `user_history`
+--
+ALTER TABLE `user_history`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
