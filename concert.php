@@ -43,25 +43,31 @@
                 }
                 if (isset($_GET['placeid'])) {
                     $placeid = $_GET['placeid'];
+                    $concertid = $_GET['concertid'];
+                    $action = "бронь";
                     $placeupdate = "UPDATE `concert_zal` SET `sit_status` = 'занятое', `reserved_by_id` = '$userlogin' WHERE id = '$placeid'";
-                    if($conn->query($placeupdate)) {
+                    $historyupdate = "INSERT INTO `user_history` (`action`, `date`, `concert_id`, `sit_id`) VALUES ('$action', NOW(), `$concertid`, `$placeid`)";
+                    if ($conn->query($placeupdate)) {
                         echo "<p class='sit__update'> Место зарезервировано </p>";
-                        ?>
+                ?>
                         <script>
                             setTimeout(() => {
                                 document.location.replace("http://concert/concertsite/profile.php");
                             }, 2000);
                         </script>
-                        <?php
+                    <?php
                     }
-                    else {
+                    if ($conn->query($historyupdate)) {
+                    ?>
+
+                <?php
+                    } else {
                         echo "<p class='sit__update'> Место зарезервировано" . $conn->error  . "</p>";
                     }
-                }
-                else {
+                } else {
                     echo "<ul class='sit__list sit'>";
                     foreach ($concertZalSelectResult as $concertZalRow) {
-    
+
                         echo "<li class='sit__item'>";
                         echo "<h3 class='sit__header'>" . "Номер места: " . "$concertZalRow[sit_num]" . "</h3>";
                         echo "<p class='sit__paragraph'>" . "Цена места: " . "$concertZalRow[sit_price] " . "&#8381" . "</p>";
