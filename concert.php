@@ -46,20 +46,24 @@
                     $concertid = $_GET['concertid'];
                     $action = "бронь";
                     $placeupdate = "UPDATE `concert_zal` SET `sit_status` = 'занятое', `reserved_by_id` = '$userlogin' WHERE id = '$placeid'";
-                    $historyupdate = "INSERT INTO `user_history` (`action`, `date`, `concert_id`, `sit_id`) VALUES ('$action', NOW(), `$concertid`, `$placeid`)";
+                    $historyupdate = "INSERT INTO `user_history` (`id`, `action`, `date`, `concert_id`, `sit_id`, `action_by`) VALUES (NULL, '$action', NOW(), '$concertid', '$placeid', '$userlogin')";
                     if ($conn->query($placeupdate)) {
                         echo "<p class='sit__update'> Место зарезервировано </p>";
                 ?>
-                        <script>
-                            setTimeout(() => {
-                                document.location.replace("http://concert/concertsite/profile.php");
-                            }, 2000);
-                        </script>
+
                     <?php
                     }
                     if ($conn->query($historyupdate)) {
                     ?>
 
+                        <script>
+                            setTimeout(() => {
+                                document.location.replace("http://concert/concertsite/profile.php");
+                            }, 1000);
+                        </script>
+
+                        <?php
+                        ?>
                 <?php
                     } else {
                         echo "<p class='sit__update'> Место зарезервировано" . $conn->error  . "</p>";

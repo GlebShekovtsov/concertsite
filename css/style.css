@@ -179,6 +179,7 @@ a {
 }
 
 .sit__list {
+    margin-bottom: 15px;
     display: flex;
     flex-direction: column;
 }
@@ -194,7 +195,7 @@ a {
 .sit__paragraph {
     margin: 0;
 }
-.sit__item {
+.sit__item:not(:last-child) {
     margin-bottom: 10px;
 }
 .reg__container {
@@ -340,4 +341,19 @@ a {
 .concert-info__header {
     margin: 0;
     margin-bottom: 10px;
+}
+
+.action__item {
+    margin-bottom: 15px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+.action__header {
+    margin: 0;
+    font-size: 15px;
+}
+.action__paragraph {
+    margin: 0;
 }

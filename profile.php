@@ -46,41 +46,59 @@
                 <div class="profile-concert__wrapper concert-info">
                     <h2 class="concert-info__header">Ваши места</h2>
                     <?php
-                    $sitSelect = "SELECT * FROM `concert_zal` INNER JOIN concerti ON concerti.id=concert_zal.id_concert WHERE reserved_by_id='$userlogin'";
-                    // $sitSelect = "SELECT * FROM `concert_zal` WHERE reserved_by_id='$userlogin' ";
+                    $sitSelect = "SELECT * FROM `concert_zal` WHERE reserved_by_id='$userlogin'";
                     $sitSelectResult = mysqli_query($conn, $sitSelect);
+                    $actionSelect = "SELECT * FROM `user_history` INNER JOIN concerti ON concerti.id=user_history.concert_id WHERE action_by='$userlogin'";
+                    $actionSelectResult = mysqli_query($conn, $actionSelect);
                     echo "<ul class='sit__list sit'>";
                     foreach ($sitSelectResult as $sitRow) {
-
                         echo "<li class='sit__item'>";
-                        echo "<h3 class='sit__header'>" . "Название концерта: " . "$sitRow[name]" . "</h3>";
+                        // echo "<h3 class='sit__header'>" . "Название концерта: " . "$sitRow[name]" . "</h3>";
                         echo "<h3 class='sit__header'>" . "Номер места: " . "$sitRow[sit_num]" . "</h3>";
                         echo "<p class='sit__paragraph'>" . "Цена места: " . "$sitRow[sit_price] " . "&#8381" . "</p>";
                         echo "<p class='sit__paragraph'>" . "Расположение места: " . "$sitRow[sit_direction]" . "</p>";
                         echo "<a href='profile.php?concertid=" . $sitRow['id_concert'] . "&placeid=" . $sitRow['id'] . "' class='sit__link'>" . "[Cнять бронь]" . "</a>";
                         echo "</li>";
-                        
                     }
                     echo "</ul>";
-                    if(isset($_GET['concertid']) && isset($_GET['placeid'])) {
+                    echo "<h2 class='concert-info__header'>История</h2>";
+                    echo "<ul class='action__list action'>";
+                    foreach ($actionSelectResult as $actionRow) {
+                        echo "<li class='action__item'>";
+                        echo "<h3 class='action__header'>" . "Номер места: " . "$actionRow[name]" . "</h3>";
+                        echo "<p class='action__paragraph'>" . "Действие: " . "$actionRow[action]" . "</p>";
+                        echo "<p class='action__paragraph'>" . "Дата: " . "$actionRow[date]" . "</p>";
+                        echo "<p class='action__paragraph'>" . "Место: " . "$actionRow[sit_id]" . "</p>";
+                        echo "</li>";
+                    }
+                    echo "</ul>";
+                    if (isset($_GET['concertid']) && isset($_GET['placeid'])) {
                         $concertid = $_GET['concertid'];
                         $placeid = $_GET['placeid'];
-                        $placeid = $_GET['placeid'];
+                        $actiondis = "снятие брони";
                         $placeupdate = "UPDATE `concert_zal` SET `sit_status` = 'свободное', `reserved_by_id` = '' WHERE id = '$placeid'";
-                        if($conn->query($placeupdate)) {
-                            ?>
+                        $historydisupdate = "INSERT INTO `user_history` (`id`, `action`, `date`, `concert_id`, `sit_id`, `action_by`) VALUES (NULL, '$actiondis', NOW(), '$concertid', '$placeid', '$userlogin')";
+                        if ($conn->query($placeupdate)) {
+                    ?>
+
+
+                        <?php
+                        } else {
+                            echo "<p class='sit__update'> Место зарезервировано" . $conn->error  . "</p>";
+                        }
+
+                        if ($conn->query($historydisupdate)) {
+                        ?>
                             <script>
                                 setTimeout(() => {
                                     document.location.replace("http://concert/concertsite/profile.php");
                                 }, 100);
                             </script>
-                            <?php
-                        }
-                        else {
-                            echo "<p class='sit__update'> Место зарезервировано" . $conn->error  . "</p>";
+                    <?php
                         }
                     }
-                    
+
+
                     ?>
                 </div>
             </div>
