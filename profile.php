@@ -48,8 +48,6 @@
                     <?php
                     $sitSelect = "SELECT * FROM `concert_zal` WHERE reserved_by_id='$userlogin'";
                     $sitSelectResult = mysqli_query($conn, $sitSelect);
-                    $actionSelect = "SELECT * FROM `user_history` INNER JOIN concerti ON concerti.id=user_history.concert_id WHERE action_by='$userlogin'";
-                    $actionSelectResult = mysqli_query($conn, $actionSelect);
                     echo "<ul class='sit__list sit'>";
                     foreach ($sitSelectResult as $sitRow) {
                         echo "<li class='sit__item'>";
@@ -63,15 +61,57 @@
                     echo "</ul>";
                     echo "<h2 class='concert-info__header'>История</h2>";
                     echo "<ul class='action__list action'>";
+
+                    if (isset($_GET['pageno'])) {
+                        $pageno = $_GET['pageno'];
+                    } else {
+                        $pageno = 1;
+                    }
+                    $size_page = 4;
+                    $offset = ($pageno - 1) * $size_page;
+                    $count_sql = "SELECT COUNT(*) FROM `user_history`";
+                    $result = mysqli_query($conn, $count_sql);
+                    $total_rows = mysqli_fetch_array($result)[0];
+                    $total_pages = ceil($total_rows / $size_page);
+                    $actionSelect = "SELECT * FROM `user_history` INNER JOIN concerti ON concerti.id=user_history.concert_id WHERE action_by='$userlogin' LIMIT $offset, $size_page";
+                    $actionSelectResult = mysqli_query($conn, $actionSelect);
                     foreach ($actionSelectResult as $actionRow) {
                         echo "<li class='action__item'>";
-                        echo "<h3 class='action__header'>" . "Номер места: " . "$actionRow[name]" . "</h3>";
+                        echo "<h3 class='action__header'>" . "Название концерта: " . "$actionRow[name]" . "</h3>";
                         echo "<p class='action__paragraph'>" . "Действие: " . "$actionRow[action]" . "</p>";
                         echo "<p class='action__paragraph'>" . "Дата: " . "$actionRow[date]" . "</p>";
                         echo "<p class='action__paragraph'>" . "Место: " . "$actionRow[sit_id]" . "</p>";
                         echo "</li>";
                     }
                     echo "</ul>";
+
+                    ?>
+
+                    <ul class="pagination">
+                        <li><a href="?pageno=1">Первая страница</a></li>
+                        <li class="<?php if ($pageno <= 1) {
+                                        echo 'disabled';
+                                    } ?>">
+                            <a href="<?php if ($pageno <= 1) {
+                                            echo '#';
+                                        } else {
+                                            echo "?pageno=" . ($pageno - 1);
+                                        } ?>">Назад</a>
+                        </li>
+                        <li class="<?php if ($pageno >= $total_pages) {
+                                        echo 'disabled';
+                                    } ?>">
+                            <a href="<?php if ($pageno >= $total_pages) {
+                                            echo '#';
+                                        } else {
+                                            echo "?pageno=" . ($pageno + 1);
+                                        } ?>">Вперед</a>
+                        </li>
+                        <li><a href="?pageno=<?php echo $total_pages; ?>">Последняя страница</a></li>
+                    </ul>
+
+                    <?php
+
                     if (isset($_GET['concertid']) && isset($_GET['placeid'])) {
                         $concertid = $_GET['concertid'];
                         $placeid = $_GET['placeid'];

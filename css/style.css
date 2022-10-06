@@ -342,7 +342,9 @@ a {
     margin: 0;
     margin-bottom: 10px;
 }
-
+.action__list {
+    margin-bottom: 20px;
+}
 .action__item {
     margin-bottom: 15px;
     display: flex;
@@ -356,4 +358,17 @@ a {
 }
 .action__paragraph {
     margin: 0;
+}
+
+.pagination {
+    display: flex;
+    justify-content: space-between;
+}
+.pagination li {
+    outline: 1px solid #000;
+    outline-offset: 4px;
+    border-radius: 2px;
+}
+.disabled a{
+    color: rgb(150, 144, 144);
 }
