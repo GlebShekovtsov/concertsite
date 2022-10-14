@@ -22,26 +22,22 @@
                 $concertZalSelect = "SELECT * FROM `concert_zal` WHERE id_concert = '$concert' AND sit_status = 'свободное'";
                 $concertZalSelectResult = mysqli_query($conn, $concertZalSelect);
                 $concertZalAssoc = mysqli_fetch_assoc($concertZalSelectResult);
-                if(isset($_SESSION["login"])) {
-                    foreach ($concertIDSelectResult as $concertIDRow) {
-                        echo "<div class='concert-about__wrapper'>";
-                        echo "<img src='img/" . $concertIDRow['img'] . "' class='concert__image' alt=''>";
-                        echo "<div class='concert-about__content__wrapper'>";
-                        echo
-                        "<h2 class='concert-about__header'>" .
-                            "<a href='#' class='concert-about__link'>" . $concertIDRow['name'] . "</a>" .
-                            "</h2>";
-                        echo "<time class='concert-about__time'>" . "Дата: " . "$concertIDRow[date]" . "</time>";
-                        echo "<span class='concert-about__span'>" . "Группа: " . "$concertIDRow[group_name]" . "</span>";
-                        echo "<span class='concert-about__span'>" . "Жанр: " . "$concertIDRow[genre]" . "</span>";
-                        echo "<p class='concert-about__descr'>" . "$concertIDRow[description]" . "</p>";
-                        echo "</div>";
-                        echo "</div>";
-                    }
+                foreach ($concertIDSelectResult as $concertIDRow) {
+                    echo "<div class='concert-about__wrapper'>";
+                    echo "<img src='img/" . $concertIDRow['img'] . "' class='concert__image' alt=''>";
+                    echo "<div class='concert-about__content__wrapper'>";
+                    echo
+                    "<h2 class='concert-about__header'>" .
+                        "<a href='#' class='concert-about__link'>" . $concertIDRow['name'] . "</a>" .
+                        "</h2>";
+                    echo "<time class='concert-about__time'>" . "Дата: " . "$concertIDRow[date]" . "</time>";
+                    echo "<span class='concert-about__span'>" . "Группа: " . "$concertIDRow[group_name]" . "</span>";
+                    echo "<span class='concert-about__span'>" . "Жанр: " . "$concertIDRow[genre]" . "</span>";
+                    echo "<p class='concert-about__descr'>" . "$concertIDRow[description]" . "</p>";
+                    echo "</div>";
+                    echo "</div>";
                 }
-                else if (!isset($_SESSION["login"])) {
-                    echo "<p class='sit__no-auth'>" . "Войдите чтобы отобразить места" . "<p>";
-                }
+
                 echo "<h2 class='concert-about__header'>Места</h2>";
                 if (empty($concertZalAssoc) && !isset($_GET['placeid']) && isset($_SESSION["login"])) {
                     echo "<p class='sit__empty'>" . "Мест нет!" . "<p>";
@@ -55,26 +51,25 @@
                     if ($conn->query($placeupdate)) {
                         echo "<p class='sit__update'> Место зарезервировано </p>";
                 ?>
-
                     <?php
                     }
                     if ($conn->query($historyupdate)) {
                     ?>
-
                         <script>
                             setTimeout(() => {
                                 document.location.replace("http://concert/concertsite/profile.php");
                             }, 1000);
                         </script>
-
-                        <?php
-                        ?>
                 <?php
                     } else {
                         echo "<p class='sit__update'> Место зарезервировано" . $conn->error  . "</p>";
                     }
                 }
-                 else {
+                if (!isset($_SESSION["login"])) {
+                    echo "<p class='sit__no-auth'>" . "Войдите чтобы отобразить места" . "<p>";
+                }
+                
+                else if(isset($_SESSION["login"])) {
                     echo "<ul class='sit__list sit'>";
                     foreach ($concertZalSelectResult as $concertZalRow) {
 

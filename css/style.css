@@ -372,3 +372,30 @@ a {
 .disabled a{
     color: rgb(150, 144, 144);
 }
+
+.swiper {
+    margin-bottom: 20px;
+    width: 100%;
+    min-height: 350px;
+    max-height: 450px;
+}
+.swiper-wrapper {
+    max-height: 450px;
+}
+.swiper-lazy {
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    height: 100%;
+}
+
+.swiper-button-next {
+    color: rgb(150, 144, 144);
+}
+.swiper-button-prev {
+    color: rgb(150, 144, 144);
+}
+
+.swiper-pagination-bullet-active {
+    background-color: #000;
+} 

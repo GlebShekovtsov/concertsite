@@ -46,7 +46,7 @@
                 <div class="profile-concert__wrapper concert-info">
                     <h2 class="concert-info__header">Ваши места</h2>
                     <?php
-                    $sitSelect = "SELECT * FROM `concert_zal` WHERE reserved_by_id='$userlogin'";
+                    $sitSelect = "SELECT * FROM `concert_zal`  WHERE reserved_by_id='$userlogin'";
                     $sitSelectResult = mysqli_query($conn, $sitSelect);
                     echo "<ul class='sit__list sit'>";
                     foreach ($sitSelectResult as $sitRow) {

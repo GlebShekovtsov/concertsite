@@ -20,6 +20,7 @@ if (!$conn) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Концертный зал имени Джорджа Флойда</title>
     <link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css" />
     <link rel="stylesheet" href="css/style.css">
 </head>
 
@@ -28,6 +29,28 @@ if (!$conn) {
     <main class="main">
         <section class="section concert сoncert__section">
             <div class="container concert__container">
+                <div class="swiper">
+                    <div class="swiper-wrapper">
+                        <div class="swiper-slide">
+                            <div data-background="img/zal1.jpg" class="swiper-lazy">
+                                <div class="swiper-lazy-preloader"></div>
+                            </div>
+                        </div>
+                        <div class="swiper-slide">
+                            <div data-background="img/zal1.jpg" class="swiper-lazy">
+                                <div class="swiper-lazy-preloader"></div>
+                            </div>
+                        </div>
+                        <div class="swiper-slide">
+                            <div data-background="img/zal1.jpg" class="swiper-lazy">
+                                <div class="swiper-lazy-preloader"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-pagination"></div>
+                    <div class="swiper-button-prev"></div>
+                    <div class="swiper-button-next"></div>
+                </div>
                 <div class=" content__wrapper">
                     <form action="" class="content__form" method="GET">
                         <label for="date" class="form__label">Выберите дату</label>
@@ -94,7 +117,8 @@ if (!$conn) {
             </div>
         </section>
     </main>
-
+    <script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
+    <script src="js/swiper_init.js"></script>
 </body>
 
 </html>
