@@ -46,16 +46,16 @@
                 <div class="profile-concert__wrapper concert-info">
                     <h2 class="concert-info__header">Ваши места</h2>
                     <?php
-                    $sitSelect = "SELECT * FROM `concert_zal`  WHERE reserved_by_id='$userlogin'";
+                    $sitSelect = "SELECT * FROM `concert_zal` INNER JOIN concerti ON concert_zal.id_concert=concerti.id  WHERE reserved_by_id='$userlogin'";
                     $sitSelectResult = mysqli_query($conn, $sitSelect);
                     echo "<ul class='sit__list sit'>";
                     foreach ($sitSelectResult as $sitRow) {
                         echo "<li class='sit__item'>";
-                        // echo "<h3 class='sit__header'>" . "Название концерта: " . "$sitRow[name]" . "</h3>";
+                        echo "<h3 class='sit__header'>" . "Название концерта: " . "$sitRow[name]" . "</h3>";
                         echo "<h3 class='sit__header'>" . "Номер места: " . "$sitRow[sit_num]" . "</h3>";
                         echo "<p class='sit__paragraph'>" . "Цена места: " . "$sitRow[sit_price] " . "&#8381" . "</p>";
                         echo "<p class='sit__paragraph'>" . "Расположение места: " . "$sitRow[sit_direction]" . "</p>";
-                        echo "<a href='profile.php?concertid=" . $sitRow['id_concert'] . "&placeid=" . $sitRow['id'] . "' class='sit__link'>" . "[Cнять бронь]" . "</a>";
+                        echo "<a href='profile.php?concertid=" . $sitRow['id_concert'] . "&placeid=" . $sitRow['sit_num'] . "' class='sit__link'>" . "[Cнять бронь]" . "</a>";
                         echo "</li>";
                     }
                     echo "</ul>";
@@ -116,7 +116,7 @@
                         $concertid = $_GET['concertid'];
                         $placeid = $_GET['placeid'];
                         $actiondis = "снятие брони";
-                        $placeupdate = "UPDATE `concert_zal` SET `sit_status` = 'свободное', `reserved_by_id` = '' WHERE id = '$placeid'";
+                        $placeupdate = "UPDATE `concert_zal` SET `sit_status` = 'свободное', `reserved_by_id` = '' WHERE sit_num = '$placeid'";
                         $historydisupdate = "INSERT INTO `user_history` (`id`, `action`, `date`, `concert_id`, `sit_id`, `action_by`) VALUES (NULL, '$actiondis', NOW(), '$concertid', '$placeid', '$userlogin')";
                         if ($conn->query($placeupdate)) {
                     ?>
