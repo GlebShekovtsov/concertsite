@@ -16,10 +16,15 @@
             <div class="container concert-about__container">
                 <?
                 $concert = $_GET['concertid'];
-                $concertIDSelect = "SELECT * FROM `concerti` WHERE id = '$concert'";
+                $concertIDSelect = "SELECT * FROM `raspisanie`
+                INNER JOIN concerti ON raspisanie.id_concert=concerti.id 
+                WHERE id_concert = '$concert'";
                 $concertIDSelectResult = mysqli_query($conn, $concertIDSelect);
                 $concertIDSelectRow = mysqli_fetch_array($concertIDSelectResult, MYSQLI_ASSOC);
-                $concertZalSelect = "SELECT * FROM `concert_zal` WHERE id_concert = '$concert' AND sit_status = 'свободное'";
+                $concertZalSelect = "SELECT * FROM `sits`
+                INNER JOIN concerti ON sits.id_concert=concerti.id
+                INNER JOIN direction ON sits.id_direction=direction.id
+                WHERE id_concert = '$concert' AND sit_status = 'свободное'";
                 $concertZalSelectResult = mysqli_query($conn, $concertZalSelect);
                 $concertZalAssoc = mysqli_fetch_assoc($concertZalSelectResult);
                 if(isset($_SESSION["login"])) {
@@ -50,7 +55,7 @@
                     $placeid = $_GET['placeid'];
                     $concertid = $_GET['concertid'];
                     $action = "бронь";
-                    $placeupdate = "UPDATE `concert_zal` SET `sit_status` = 'занятое', `reserved_by_id` = '$userlogin' WHERE id = '$placeid'";
+                    $placeupdate = "UPDATE `sits` SET `sit_status` = 'занятое', `reserved_by_id` = '$userlogin' WHERE id = '$placeid'";
                     $historyupdate = "INSERT INTO `user_history` (`id`, `action`, `date`, `concert_id`, `sit_id`, `action_by`) VALUES (NULL, '$action', NOW(), '$concertid', '$placeid', '$userlogin')";
                     if ($conn->query($placeupdate)) {
                         echo "<p class='sit__update'> Место зарезервировано </p>";
@@ -62,9 +67,9 @@
                     ?>
 
                         <script>
-                            setTimeout(() => {
-                                document.location.replace("http://concert/concertsite/profile.php");
-                            }, 1000);
+                            // setTimeout(() => {
+                            //     document.location.replace("http://concert/concertsite/profile.php");
+                            // }, 1000);
                         </script>
 
                         <?php
@@ -81,7 +86,8 @@
                         echo "<li class='sit__item'>";
                         echo "<h3 class='sit__header'>" . "Номер места: " . "$concertZalRow[sit_num]" . "</h3>";
                         echo "<p class='sit__paragraph'>" . "Цена места: " . "$concertZalRow[sit_price] " . "&#8381" . "</p>";
-                        echo "<p class='sit__paragraph'>" . "Расположение места: " . "$concertZalRow[sit_direction]" . "</p>";
+                        echo "<p class='sit__paragraph'>" . "Расположение: " . "$concertZalRow[direction_name]" . "</p>";
+                        echo "<p class='sit__paragraph'>" . "Ряд: " . "$concertZalRow[id_row]" . "</p>";
                         echo "<a href='concert.php?concertid=" . $concertZalRow['id_concert'] . "&placeid=" . $concertZalRow['id'] . "' class='sit__link'>" . "[Забронировать]" . "</a>";
                         echo "</li>";
                     }

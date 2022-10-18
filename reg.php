@@ -37,13 +37,16 @@ include 'connect.php';
 
                     if (isset($_POST['submitreg'])) {
                         $login = $_POST['login'];
+                        $firstName = $_POST['first-name'];
+                        $surname = $_POST['surname'];
+                        $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
                         $userInsertion = "INSERT INTO `user` (`first-name`, `surname`, `login`, `password`) VALUES ('$firstName', '$surname', '$login', '$password')";
                         if ($conn->query($userInsertion)) {
                             echo "<p class='reg__paragraph'>" . "Регистрация прошла успешно, Перенаправляем..." . "</p>";
                             ?>
                             <script>
                                 setTimeout(() => {
-                                    document.location.replace("http://concert/concertsite/index.php");
+                                    document.location.replace("http://concert-new/concertsite/index.php");
                                 }, 2000);
                             </script>
                             <?php
