@@ -4,7 +4,9 @@ if (!$conn) {
     die("Ошибка: " . mysqli_connect_error());
 } else {
     echo "<div class='container'>";
-    $concertSelect = "SELECT * FROM `raspisanie` INNER JOIN concerti ON raspisanie.id_concert=concerti.id";
+    $concertSelect = "SELECT * FROM `raspisanie`
+    INNER JOIN concerti ON raspisanie.id_concert=concerti.id
+    ORDER BY id_concert ASC";
     $concertSelectResult = mysqli_query($conn, $concertSelect);
     $concertSelectRow = mysqli_fetch_array($concertSelectResult, MYSQLI_ASSOC);
     echo "</div>";
@@ -37,12 +39,12 @@ if (!$conn) {
                             </div>
                         </div>
                         <div class="swiper-slide">
-                            <div data-background="img/zal1.jpg" class="swiper-lazy">
+                            <div data-background="img/zal2.jpg" class="swiper-lazy">
                                 <div class="swiper-lazy-preloader"></div>
                             </div>
                         </div>
                         <div class="swiper-slide">
-                            <div data-background="img/zal1.jpg" class="swiper-lazy">
+                            <div data-background="img/zal3.jpg" class="swiper-lazy">
                                 <div class="swiper-lazy-preloader"></div>
                             </div>
                         </div>
@@ -66,7 +68,9 @@ if (!$conn) {
                             <?php
                             if (isset($_GET['date'])) {
                                 $date = $_GET['date'];
-                                $concertDateSelect = "SELECT * FROM `raspisanie` INNER JOIN concerti ON raspisanie.id_concert=concerti.id WHERE date='$date'";
+                                $concertDateSelect = "SELECT * FROM `raspisanie`
+                                INNER JOIN concerti ON raspisanie.id_concert=concerti.id WHERE date='$date'
+                                ORDER BY id_concert ASC";
                                 $concertDateSelectResult = mysqli_query($conn, $concertDateSelect);
                                 $concertDateSelectRow = mysqli_fetch_array($concertDateSelectResult, MYSQLI_ASSOC);
                                 foreach ($concertDateSelectResult as $concertDateRow) {
@@ -78,10 +82,11 @@ if (!$conn) {
                                         "<a href='#' class='concert__link'>" . $concertDateRow['name'] . "</a>" .
                                         "</h2>";
                                     echo "<time class='concert__time'>" . "Дата: " . "$concertDateRow[date]" . "</time>";
+                                    echo "<time class='concert__time'>" . "Время: " . "$concertDateRow[time]" . "</time>";
                                     echo "<span class='concert__span'>" . "Группа: " . "$concertDateRow[group_name]" . "</span>";
                                     echo "<span class='concert__span'>" . "Жанр: " . "$concertDateRow[genre]" . "</span>";
                                     echo "<div class='concert__about__wrapper'>";
-                                    echo "<a href='index.php?concertid=" . $concertDateRow['id'] . "' class='concert__about'>" . "Просмотреть места" . "</a>";
+                                    echo "<a href='index.php?concertid=" . $concertDateRow['id_raspisanie'] . "' class='concert__about'>" . "Просмотреть места" . "</a>";
                                     echo "</div>";
                                     echo "</div>";
                                     echo "</li>";
@@ -96,10 +101,11 @@ if (!$conn) {
                                         "<a href='#' class='concert__link'>" . $concertRow['name'] . "</a>" .
                                         "</h2>";
                                     echo "<time class='concert__time'>" . "Дата: " . "$concertRow[date]" . "</time>";
+                                    echo "<time class='concert__time'>" . "Дата: " . "$concertRow[time]" . "</time>";
                                     echo "<span class='concert__span'>" . "Группа: " . "$concertRow[group_name]" . "</span>";
                                     echo "<span class='concert__span'>" . "Жанр: " . "$concertRow[genre]" . "</span>";
                                     echo "<div class='concert__about__wrapper'>";
-                                    echo "<a href='concert.php?concertid=" . $concertRow['id'] . "' class='concert__about'>" . "Просмотреть места" . "</a>";
+                                    echo "<a href='concert.php?concertid=" . $concertRow['id_raspisanie'] . "' class='concert__about'>" . "Просмотреть места" . "</a>";
                                     echo "</div>";
                                     echo "</div>";
                                     echo "</li>";

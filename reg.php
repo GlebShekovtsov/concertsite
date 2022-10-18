@@ -46,7 +46,7 @@ include 'connect.php';
                             ?>
                             <script>
                                 setTimeout(() => {
-                                    document.location.replace("http://concert-new/concertsite/index.php");
+                                    document.location.replace("http://concertsite-new/index.php");
                                 }, 2000);
                             </script>
                             <?php

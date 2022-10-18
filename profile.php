@@ -18,7 +18,7 @@
                 if (!isset($_SESSION['userid'])) {
                 ?>
                     <script>
-                        document.location.replace('http://concert/concertsite/auth.php')
+                        document.location.replace('http://concertsite-new/auth.php')
                     </script>
                 <?php
                 }
@@ -46,16 +46,22 @@
                 <div class="profile-concert__wrapper concert-info">
                     <h2 class="concert-info__header">Ваши места</h2>
                     <?php
-                    $sitSelect = "SELECT * FROM `concert_zal` WHERE reserved_by_id='$userlogin'";
+                    $sitSelect = "SELECT * FROM `booking`
+                    INNER JOIN raspisanie ON booking.id_raspisanie = raspisanie.id_raspisanie
+                    INNER JOIN sits ON booking.id_sits = sits.id_sit
+                    INNER JOIN direction ON sits.id_direction = direction.id
+                    INNER JOIN concerti ON raspisanie.id_concert = concerti.id
+                    WHERE id_user='$userlogin'";
                     $sitSelectResult = mysqli_query($conn, $sitSelect);
                     echo "<ul class='sit__list sit'>";
                     foreach ($sitSelectResult as $sitRow) {
                         echo "<li class='sit__item'>";
-                        // echo "<h3 class='sit__header'>" . "Название концерта: " . "$sitRow[name]" . "</h3>";
+                        echo "<h3 class='sit__header'>" . "Название концерта: " . "$sitRow[name]" . "</h3>";
                         echo "<h3 class='sit__header'>" . "Номер места: " . "$sitRow[sit_num]" . "</h3>";
+                        echo "<p class='sit__paragraph'>" . "Ряд: " . "$sitRow[id_row]" . "</p>";
+                        echo "<p class='sit__paragraph'>" . "Расположение места: " . "$sitRow[direction_name]" . "</p>";
                         echo "<p class='sit__paragraph'>" . "Цена места: " . "$sitRow[sit_price] " . "&#8381" . "</p>";
-                        echo "<p class='sit__paragraph'>" . "Расположение места: " . "$sitRow[sit_direction]" . "</p>";
-                        echo "<a href='profile.php?concertid=" . $sitRow['id_concert'] . "&placeid=" . $sitRow['id'] . "' class='sit__link'>" . "[Cнять бронь]" . "</a>";
+                        echo "<a href='profile.php?bookid=" . $sitRow['id_booking'] . "&concertid=" . $sitRow['id'] ."&placeid=". $sitRow['id_sit'] ."' class='sit__link'>" . "[Cнять бронь]" . "</a>";
                         echo "</li>";
                     }
                     echo "</ul>";
@@ -73,14 +79,14 @@
                     $result = mysqli_query($conn, $count_sql);
                     $total_rows = mysqli_fetch_array($result)[0];
                     $total_pages = ceil($total_rows / $size_page);
-                    $actionSelect = "SELECT * FROM `user_history` INNER JOIN concerti ON concerti.id=user_history.concert_id WHERE action_by='$userlogin' LIMIT $offset, $size_page";
+                    $actionSelect = "SELECT * FROM `user_history` INNER JOIN concerti ON concerti.id=user_history.id_concert WHERE action_by='$userlogin' LIMIT $offset, $size_page";
                     $actionSelectResult = mysqli_query($conn, $actionSelect);
                     foreach ($actionSelectResult as $actionRow) {
                         echo "<li class='action__item'>";
                         echo "<h3 class='action__header'>" . "Название концерта: " . "$actionRow[name]" . "</h3>";
                         echo "<p class='action__paragraph'>" . "Действие: " . "$actionRow[action]" . "</p>";
                         echo "<p class='action__paragraph'>" . "Дата: " . "$actionRow[date]" . "</p>";
-                        echo "<p class='action__paragraph'>" . "Место: " . "$actionRow[sit_id]" . "</p>";
+                        echo "<p class='action__paragraph'>" . "Место: " . "$actionRow[id_sit]" . "</p>";
                         echo "</li>";
                     }
                     echo "</ul>";
@@ -115,23 +121,24 @@
                     if (isset($_GET['concertid']) && isset($_GET['placeid'])) {
                         $concertid = $_GET['concertid'];
                         $placeid = $_GET['placeid'];
+                        $bookid = $_GET['bookid'];
                         $actiondis = "снятие брони";
-                        $placeupdate = "UPDATE `concert_zal` SET `sit_status` = 'свободное', `reserved_by_id` = '' WHERE id = '$placeid'";
-                        $historydisupdate = "INSERT INTO `user_history` (`id`, `action`, `date`, `concert_id`, `sit_id`, `action_by`) VALUES (NULL, '$actiondis', NOW(), '$concertid', '$placeid', '$userlogin')";
+                        $placeupdate = "DELETE FROM `booking` WHERE id_booking = $bookid";
+                        $historydisupdate = "INSERT INTO `user_history` (`id`, `action`, `date`, `id_concert`, `id_sit`, `action_by`) VALUES (NULL, '$actiondis', NOW(), '$concertid', '$placeid', '$userlogin')";
                         if ($conn->query($placeupdate)) {
                     ?>
 
 
                         <?php
                         } else {
-                            echo "<p class='sit__update'> Место зарезервировано" . $conn->error  . "</p>";
+                            echo "<p class='sit__update'> Бронь снята" . $conn->error  . "</p>";
                         }
 
                         if ($conn->query($historydisupdate)) {
                         ?>
                             <script>
                                 setTimeout(() => {
-                                    document.location.replace("http://concert/concertsite/profile.php");
+                                    document.location.replace("http://concertsite-new/profile.php");
                                 }, 100);
                             </script>
                     <?php
@@ -149,7 +156,7 @@
                 <div class="concert-profile__wrapper">
                     <ul class="concert-profile__list">
                         <?php
-                        $concertRandSelect = "SELECT * FROM `concerti` ORDER BY rand() limit 3";
+                        $concertRandSelect = "SELECT * FROM `raspisanie` INNER JOIN concerti ON raspisanie.id_concert=concerti.id ORDER BY rand() limit 3";
                         $concertRandSelectResult = mysqli_query($conn, $concertRandSelect);
                         foreach ($concertRandSelectResult as $concertRandRow) {
                             echo "<li class='concert-profile__item'>";
@@ -159,7 +166,6 @@
                             "<h3 class='concert-profile__header'>" .
                                 "<a href='#' class='concert__link'>" . $concertRandRow['name'] . "</a>" .
                                 "</h3>";
-                            echo "<time class='concert-profile__time'>" . "Дата: " . "$concertRandRow[date]" . "</time>";
                             echo "<span class='concert-profile__span'>" . "Группа: " . "$concertRandRow[group_name]" . "</span>";
                             echo "<span class='concert-profile__span'>" . "Жанр: " . "$concertRandRow[genre]" . "</span>";
                             echo "<div class='concert-profile__about__wrapper'>";

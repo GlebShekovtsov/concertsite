@@ -98,7 +98,7 @@ a {
     border-bottom-right-radius: 8px;
     border-bottom-left-radius: 8px;
 }
-.concert__item:not(:last-child) {
+.concert__item:not(:nth-child(3n)) {
     margin-right: 30px;
 }
 .concert__item img {
@@ -167,6 +167,7 @@ a {
 .concert__list {
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
 }
 .concert__about__wrapper {
     display: flex;
@@ -181,15 +182,22 @@ a {
 .sit__list {
     margin-bottom: 15px;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
 }
 .sit__item {
+    margin-bottom: 10px;
+    width: calc((100% - 15px * 2) / 3);
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: space-between;
-    align-items: center;
+    gap: .5em;
+    /* align-items: flex-start; */
+}
+.sit__item:not(:nth-child(3n)) {
+    margin-right: 15px;
 }
 .sit__header {
+    font-size: 16px;
     margin: 0;
 }
 .sit__paragraph {
